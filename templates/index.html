@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Imgsrch Web Engine</h1>
+<p>
+    This website features an image search from an input image. Try now !
+</p>
+<form>
+    <div class="form-group">
+        <label for="imageFile">Fichier de l'image</label>
+        <input type="file" class="form-control-file" name="imageFile">
+    </div>
+    <input type="submit" id="submit" value="Search" />
+</form>
+<progress style="display: hidden;"></progress>
+
+<div id="results" class="row">
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/index.js"></script>
+{% endblock %}
