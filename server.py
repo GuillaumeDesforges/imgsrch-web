@@ -1,15 +1,18 @@
 from flask import Flask, render_template, request, jsonify
 import os
-from imgsrch import ImgSrch
+from imgsrch import Engine
 import mimetypes
 import uuid
 
 app = Flask(__name__, static_url_path='/static')
 
-engine = ImgSrch()
+engine = Engine()
 print("Loading engine")
-engine.load('static/img')
-print("Engin loaded")
+if engine.read('engine.xml'):
+    print("Engin loaded")
+else:
+    print("Could not load engine file")
+    exit(1)
 
 # debug
 app.config['CACHE_TYPE'] = 'null'
@@ -36,10 +39,8 @@ def upload():
         print("Saved file to", file_path)
     except Exception as e:
         return 'Failed to save file', 400
-    try:
-        scores = dict(engine.computeLikelihoods(file_path))
-    except:
-        return 'Picture is too little', 400
+    scores = engine.computeLikelihoods(file_path)
     scores = [{'path': key, 'score': value} for key, value in scores.items()]
+    scores = list(sorted(scores, key=lambda x:x['score'], reverse=True))
     return jsonify({'scores': scores}), 200
 

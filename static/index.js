@@ -1,5 +1,8 @@
 $('progress').hide();
 
+var scores = {};
+var displayLimit = 15;
+
 $("#submit").click(function (e) {
     e.preventDefault();
     $('progress').show();
@@ -34,20 +37,24 @@ $("#submit").click(function (e) {
             return myXhr;
         },
         success: function(data) {
-            var results = $('#results');
-            results.empty();
-            var scores = data.scores;
-            console.log(scores);
-            for(var i = 0; i < scores.length; i++) {
-                var image = scores[i];
-                console.log(image);
-                var imagePath = image.path;
-                // var imageScore = image.score;
-                results.append('<div class="col-3"><a href="'+ imagePath +'"><img class="img-fluid" src="'+ imagePath +'" /></a></div>');
-            }
+            scores = data.scores;
+            display();
         },
         complete: function() {
             $('progress').hide();
         }
     });
 });
+
+function display() {
+    var results = $('#results');
+    results.empty();
+    var imax = (displayLimit < scores.length) ? displayLimit : scores.length;
+    console.log(imax);
+    for(var i = 0; i < imax; i++) {
+        var image = scores[i];
+        var imagePath = image.path;
+        var imageScore = image.score;
+        results.append('<div class="col-3"><a href="/static/'+ imagePath +'"><img class="img-fluid" src="/static/'+ imagePath +'" /></a><div>'+imageScore+'</div></div>');
+    }
+}
