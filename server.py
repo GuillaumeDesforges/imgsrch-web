@@ -6,13 +6,8 @@ import uuid
 
 app = Flask(__name__, static_url_path='/static')
 
-engine = Engine()
 print("Loading engine")
-if engine.read('engine.xml'):
-    print("Engin loaded")
-else:
-    print("Could not load engine file")
-    exit(1)
+engine = Engine("engine.xml")
 
 # debug
 app.config['CACHE_TYPE'] = 'null'
