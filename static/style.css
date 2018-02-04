@@ -3,6 +3,10 @@ body {
   background: fixed no-repeat top right, url("fond_ciel.jpg") fixed;
 }
 
+.navbar-inverse{
+    
+}
+
 .starter-template {
   padding: 40px 15px;
   text-align: center;
@@ -14,9 +18,12 @@ form {
 }
 
 h2{
-  border: 5px black groove;
+  border: 5px black double;
   border-radius: 30px;
+  width: 150px;
+  margin: auto;
   text-shadow: 2px 2px 4px black;
+  box-shadow: 3px 3px 4px black;
 
 }
 
